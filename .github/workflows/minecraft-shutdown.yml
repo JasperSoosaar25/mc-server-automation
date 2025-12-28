@@ -38,9 +38,22 @@ jobs:
 
           sleep 10
 
-      - name: Stop Minecraft server
+      - name: Stop server cleanly
         run: |
+          # Save world and stop cleanly
+          mcrcon -H "${{ secrets.MC_HOST }}" \
+                 -P "${{ secrets.RCON_PORT }}" \
+                 -p "${{ secrets.RCON_PASS }}" \
+                 "save-all"
+
+          # slight pause so server finishes save
+          sleep 1
+
+          # actual stop
           mcrcon -H "${{ secrets.MC_HOST }}" \
                  -P "${{ secrets.RCON_PORT }}" \
                  -p "${{ secrets.RCON_PASS }}" \
                  "stop"
+
+          # small delay so process exits gracefully
+          sleep 5
