@@ -20,21 +20,21 @@ jobs:
           mcrcon -H "${{ secrets.MC_HOST }}" \
                  -P "${{ secrets.RCON_PORT }}" \
                  -p "${{ secrets.RCON_PASS }}" \
-                 "say §c⚠ Server is shutting down in 60 seconds!"
+                 "say §c[!] Server is shutting down in 60 seconds!"
 
           sleep 30
 
           mcrcon -H "${{ secrets.MC_HOST }}" \
                  -P "${{ secrets.RCON_PORT }}" \
                  -p "${{ secrets.RCON_PASS }}" \
-                 "say §e⏳ 30 seconds remaining!"
+                 "say §e[!] 30 seconds remaining!"
 
           sleep 20
 
           mcrcon -H "${{ secrets.MC_HOST }}" \
                  -P "${{ secrets.RCON_PORT }}" \
                  -p "${{ secrets.RCON_PASS }}" \
-                 "say §c⏳ 10 seconds remaining!"
+                 "say §c[!] 10 seconds remaining!"
 
           sleep 10
 
