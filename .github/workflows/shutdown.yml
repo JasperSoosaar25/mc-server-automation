@@ -1,21 +1,21 @@
 name: Minecraft Shutdown with Countdown
 
 on:
-  workflow_dispatch: # manual start button
-  schedule:
-    - cron: "0 2 * * *" # auto shutdown at 02:00 (adjust!)
+  workflow_dispatch: # ONLY manual trigger
 
 jobs:
   shutdown:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install mcrcon
+      - name: Download mcrcon
         run: |
-          sudo apt update
-          sudo apt install -y mcrcon
+          curl -L https://github.com/Tiiffi/mcrcon/releases/latest/download/mcrcon-0.7.2-linux-x86-64.tar.gz -o mcrcon.tar.gz
+          tar -xzf mcrcon.tar.gz
+          chmod +x mcrcon
+          sudo mv mcrcon /usr/local/bin/
 
-      - name: Countdown start
+      - name: Start countdown
         run: |
           mcrcon -H ${{ secrets.MC_HOST }} \
                  -P ${{ secrets.RCON_PORT }} \
