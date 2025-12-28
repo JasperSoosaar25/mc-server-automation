@@ -1,7 +1,7 @@
-name: Minecraft Shutdown with Countdown
+name: Minecraft Shutdown (Debug)
 
 on:
-  workflow_dispatch: # ONLY manual trigger
+  workflow_dispatch:
 
 jobs:
   shutdown:
@@ -15,28 +15,10 @@ jobs:
           chmod +x mcrcon
           sudo mv mcrcon /usr/local/bin/
 
-      - name: Start countdown
+      - name: Test RCON connection
         run: |
+          echo "Testing RCON connection..."
           mcrcon -H ${{ secrets.MC_HOST }} \
                  -P ${{ secrets.RCON_PORT }} \
                  -p ${{ secrets.RCON_PASS }} \
-                 "say §c⚠ Server shutting down in 60 seconds!"
-
-          sleep 30
-
-          mcrcon -H ${{ secrets.MC_HOST }} -P ${{ secrets.RCON_PORT }} -p ${{ secrets.RCON_PASS }} \
-          "say §e⏳ 30 seconds remaining!"
-
-          sleep 20
-
-          mcrcon -H ${{ secrets.MC_HOST }} -P ${{ secrets.RCON_PORT }} -p ${{ secrets.RCON_PASS }} \
-          "say §c⏳ 10 seconds remaining!"
-
-          sleep 10
-
-      - name: Stop server
-        run: |
-          mcrcon -H ${{ secrets.MC_HOST }} \
-                 -P ${{ secrets.RCON_PORT }} \
-                 -p ${{ secrets.RCON_PASS }} \
-                 "stop"
+                 "list"
